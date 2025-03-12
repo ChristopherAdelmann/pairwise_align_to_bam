@@ -4,8 +4,8 @@ import pathlib as pl
 import pysam as ps
 import biotite.sequence as seq
 
-from reference import Reference
-from read import Read
+from pairwise_align_to_bam.reference import Reference
+from pairwise_align_to_bam.read import Read
 
 
 class SamReader:

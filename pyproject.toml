@@ -1,0 +1,16 @@
+[project]
+name = "pairwise_align_to_bam"
+version = "0.1.0"
+requires-python = ">=3.12"
+dependencies = [
+    "biotite>=1.1.0",
+    "pysam>=0.22.1",
+    "numpy>=1.26.4"
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project.scripts]
+pairwise_align = "pairwise_align_to_bam.cli:run"

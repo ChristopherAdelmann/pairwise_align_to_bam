@@ -3,7 +3,7 @@ import pathlib as pl
 import biotite.sequence.io.fasta as faio
 import biotite.sequence as seq
 
-from reference import Reference
+from pairwise_align_to_bam.reference import Reference
 
 
 class FastaReader:

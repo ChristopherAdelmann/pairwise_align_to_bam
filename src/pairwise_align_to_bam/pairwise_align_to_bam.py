@@ -1,8 +1,8 @@
 import biotite.sequence.align as align
 import numpy as np
 
-from reference import Reference
-from read import Read, AlignedRead
+from pairwise_align_to_bam.reference import Reference
+from pairwise_align_to_bam.read import Read, AlignedRead
 
 
 def get_effective_length(trace: np.ndarray) -> int:
@@ -72,7 +72,7 @@ def is_adapter(adapter: Reference, read: Read, min_identity: float) -> bool:
 
 
 def get_alignment(
-    input: tuple[list[Reference], Reference | None, Read]
+    input: tuple[list[Reference], Reference | None, Read],
 ) -> AlignedRead | None:
     references, adapter, read = input
 
@@ -95,7 +95,7 @@ def get_alignment(
 
 
 def get_all_alignments(
-    input: tuple[list[Reference], Reference | None, Read]
+    input: tuple[list[Reference], Reference | None, Read],
 ) -> list[AlignedRead]:
     references, adapter, read = input
 

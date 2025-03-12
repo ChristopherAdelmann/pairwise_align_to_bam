@@ -3,26 +3,13 @@ import argparse
 import pathlib as pl
 
 
-from process import process
-from parameter import *
+from pairwise_align_to_bam.process import process
+from pairwise_align_to_bam.parameter import *
 
-if __name__ == "__main__":
-    import cProfile
 
-    # if check avoids hackery when not profiling
-    # Optional; hackery *seems* to work fine even when not profiling, it's just wasteful
-    if sys.modules["__main__"].__file__ == cProfile.__file__:
-        import pairwise_align_to_bam as pw  # Imports you again (does *not* use cache or execute as __main__)
-
-        globals().update(
-            vars(pw)
-        )  # Replaces current contents with newly imported stuff
-        sys.modules["__main__"] = (
-            pw  # Ensures pickle lookups on __main__ find matching version
-        )
-
+def run():
     parser = argparse.ArgumentParser(
-        "PairwiseMap",
+        "pairwise_align",
         description="Pairwise align ONT reads to a small number of reference sequences",
     )
 
@@ -93,3 +80,20 @@ if __name__ == "__main__":
     params = Parameters(processing_params, align_params, filtering_params)
 
     process(params)
+
+
+if __name__ == "__main__":
+    import cProfile
+
+    # if check avoids hackery when not profiling
+    # Optional; hackery *seems* to work fine even when not profiling, it's just wasteful
+    if sys.modules["__main__"].__file__ == cProfile.__file__:
+        import pairwise_align_to_bam as pw  # Imports you again (does *not* use cache or execute as __main__)
+
+        globals().update(
+            vars(pw)
+        )  # Replaces current contents with newly imported stuff
+        sys.modules["__main__"] = (
+            pw  # Ensures pickle lookups on __main__ find matching version
+        )
+    run()

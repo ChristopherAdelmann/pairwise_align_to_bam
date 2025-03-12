@@ -1,5 +1,5 @@
-from read import AlignedRead
-from parameter import FilteringParameters
+from pairwise_align_to_bam.read import AlignedRead
+from pairwise_align_to_bam.parameter import FilteringParameters
 
 
 class AlignmentFilter:

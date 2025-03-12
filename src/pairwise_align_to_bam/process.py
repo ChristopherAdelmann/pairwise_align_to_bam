@@ -4,13 +4,16 @@ import multiprocessing as mp
 
 import pysam as ps
 
-from reference import Reference
-from sam_reader import SamReader
-from parameter import Parameters
+from pairwise_align_to_bam.reference import Reference
+from pairwise_align_to_bam.sam_reader import SamReader
+from pairwise_align_to_bam.parameter import Parameters
 
-from pairwise_align_to_bam import get_alignment, get_all_alignments
-from fasta_reader import FastaReader
-from alignment_filter import AlignmentFilter
+from pairwise_align_to_bam.pairwise_align_to_bam import (
+    get_alignment,
+    get_all_alignments,
+)
+from pairwise_align_to_bam.fasta_reader import FastaReader
+from pairwise_align_to_bam.alignment_filter import AlignmentFilter
 
 
 def process(parameters: Parameters):
