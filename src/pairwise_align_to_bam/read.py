@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 from functools import cached_property, total_ordering
 import math
+from venv import logger
 
 import biotite.sequence as seq
 import biotite.sequence.align as align
@@ -67,6 +68,26 @@ class AlignedRead(Read):
 
         flag = "2048" if is_supplementary else "0"
 
+        # Probability values for modified bases need to be handled separately because pysam cannot currently
+        # convert it from string to alignment segment (https://github.com/pysam-developers/pysam/issues/1123)
+        ml_values: list[int] | None = None
+        ml_tag = "ML:B:C"
+
+        if ml_tag in self.tags:
+            split_tags = self.tags.split("\t")
+
+            cleaned_tags: list[str] = []
+
+            for split_tag in split_tags:
+                if ml_tag in split_tag:
+                    ml_values = [
+                        int(val) for val in split_tag.split(":")[-1].split(",")[1:]
+                    ]
+                else:
+                    cleaned_tags.append(split_tag)
+
+            self.tags = "\t".join(cleaned_tags)
+
         sam_string = "\t".join(
             [
                 self.read_id,
@@ -86,7 +107,12 @@ class AlignedRead(Read):
             ]
         )
 
-        return ps.AlignedSegment.fromstring(sam_string, sam_header)
+        aligned_segment = ps.AlignedSegment.fromstring(sam_string, sam_header)
+
+        if ml_values and len(ml_values) > 0:
+            aligned_segment.set_tag("ML", ml_values)
+
+        return aligned_segment
 
     def __eq__(self, other: "AlignedRead") -> bool:
         return math.isclose(self.rel_align_score, other.rel_align_score)
