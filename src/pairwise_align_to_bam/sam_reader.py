@@ -43,7 +43,7 @@ class SamReader:
                 if line.startswith("@"):
                     continue
 
-                tokens = line.split("\t", 11)
+                tokens = line.rstrip().split("\t", 11)
 
                 if len(tokens[9]) < min_length:
                     continue
