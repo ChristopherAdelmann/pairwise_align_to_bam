@@ -105,7 +105,7 @@ class AlignedRead(Read):
                 f"rs:f:{self.rel_align_score}",
                 self.tags,
             ]
-        )
+        ).rstrip()
 
         aligned_segment = ps.AlignedSegment.fromstring(sam_string, sam_header)
 
